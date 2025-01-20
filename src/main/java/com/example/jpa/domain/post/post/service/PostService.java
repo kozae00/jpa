@@ -4,6 +4,7 @@ import com.example.jpa.domain.post.post.entity.Post;
 import com.example.jpa.domain.post.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    @Transactional // Transactional은 'springframework'의 Transactional을 사용해야한다.
     public Post modify(Post post, String title, String body) {
         post.setTitle(title);
         post.setBody(body);
@@ -36,5 +38,14 @@ public class PostService {
 
     public Optional<Post> findById(long id) {
         return postRepository.findById(id);
+    }
+
+    @Transactional
+    public void modify2(long id, String title, String body) {
+        Post post = postRepository.findById(id).get();
+
+        post.setTitle(title);
+        post.setBody(body);
+
     }
 }
