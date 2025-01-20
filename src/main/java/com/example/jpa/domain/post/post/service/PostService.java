@@ -49,4 +49,12 @@ public class PostService {
         post.setBody(body);
 
     }
+
+    public void delete(Post post) {
+        postRepository.delete(post);
+    }
+
+    public void deleteById(long id) {
+        postRepository.deleteById(id);
+    }
 }
