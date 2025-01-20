@@ -22,11 +22,8 @@ public class BaseInitData {
            }
 
            Post p1 = postService.write("title1", "body1");
-           System.out.println(p1.getId() + "번 포스트가 생성되었습니다.");
            Post p2 = postService.write("title2", "body2");
-           System.out.println(p2.getId() + "번 포스트가 생성되었습니다.");
            Post p3 = postService.write("title3", "body3");
-           System.out.println(p3.getId() + "번 포스트가 생성되었습니다.");
         };
     }
 }

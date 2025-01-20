@@ -1,14 +1,21 @@
 package com.example.jpa.domain.post.post.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+// @Setter // Setter는 사용하지 않는 것이 좋다. Setter를 사용하면 객체의 불변성이 깨지기 때문
 @Entity
-@Setter
 @Getter
+@AllArgsConstructor // 생성자
+@NoArgsConstructor // 기본 생성자
+@Builder // 빌더 패턴을 사용
+// AllArgsConstructor, NoArgsConstructor, Builder를 사용하면 생성자를 직접 만들지 않아도 된다. 3개는 항상 같이 묶여야 함.
+
 public class Post {
 
     @Id // Primary Key

@@ -14,18 +14,31 @@ public class PostService {
     private final PostRepository postRepository;;
     public Post write(String title, String body) {
         // Post 조립
-        Post post = new Post();
+
+        Post post = Post.builder()
+                .title(title)
+                .body(body)
+                .createdDate(LocalDateTime.now())
+                .modifiedDate(LocalDateTime.now())
+                .id(null)
+                .build();
+
+//        Post post = new Post(
+//                null,
+//                LocalDateTime.now(),
+//                LocalDateTime.now(),
+//                title,
+//                body
+//        );
 
         // post.setId(1L); id는 기본적으로 JPA가 관리. 직접 입력 X
-        post.setCreatedDate(LocalDateTime.now());
-        post.setModifiedDate(LocalDateTime.now());
-        post.setTitle(title);
-        post.setBody(body);
+//        post.setCreatedDate(LocalDateTime.now());
+//        post.setModifiedDate(LocalDateTime.now());
+//        post.setTitle(title);
+//        post.setBody(body);
 
         // repository 넘김
-        postRepository.save(post);
-
-        return post;
+        return postRepository.save(post);
     }
 
     public long count() {
