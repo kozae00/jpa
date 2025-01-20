@@ -25,12 +25,6 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    @Transactional // Transactional은 'springframework'의 Transactional을 사용해야한다.
-    public Post modify(Post post, String title, String body) {
-        post.setTitle(title);
-        post.setBody(body);
-        return post;
-    }
 
     public long count() {
         return postRepository.count();
@@ -40,7 +34,14 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    @Transactional
+    @Transactional // Transactional은 'springframework'의 Transactional을 사용해야한다.
+    public Post modify(Post post, String title, String body) {
+        post.setTitle(title);
+        post.setBody(body);
+        return post;
+    }
+
+    @Transactional // 메서드의 시작이 트랜잭션 시작. 메서드의 끝이 트랜잭션 종료.
     public void modify2(long id, String title, String body) {
         Post post = postRepository.findById(id).get();
 
