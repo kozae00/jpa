@@ -1,0 +1,23 @@
+# properties 형태
+# spring.application.name=jpa
+
+# yml 형태
+# spring:
+#   application:
+#     name: jpa
+#     group: com.example
+
+server:
+  port: 8080
+
+# community 버전일 때, log를 컬러로 볼 수 있도록 해줌.
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  datasource:
+    url: jdbc:h2:./db_dev;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
