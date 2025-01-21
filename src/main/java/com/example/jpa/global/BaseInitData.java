@@ -5,10 +5,12 @@ import com.example.jpa.domain.post.comment.service.CommentService;
 import com.example.jpa.domain.post.post.entity.Post;
 import com.example.jpa.domain.post.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,11 @@ public class BaseInitData {
 
     private final PostService postService;
     private final CommentService commentService;
+
+    // 프록시 객체를 획득
+    @Autowired
+    @Lazy
+    private final BaseInitData self; // 프록시
 
     @Bean
     @Order(1)
@@ -46,20 +53,20 @@ public class BaseInitData {
     public ApplicationRunner applicationRunner2() {
         return new ApplicationRunner() {
             @Override
-            @Transactional
             public void run(ApplicationArguments args) throws Exception {
-                Comment c1 = commentService.findById(1L).get();
-                // SELCT * FROM comment WHERE id = 1;
-
-                Post post = c1.getPost();
-                // SELECT * FROM post WHERE id = 1;
-
-                // Eager는 모든 정보를 들고옴. -> join 발생.
-                // Lazy는 필요한 정보만 들고옴. -> join 발생 X.
-
-                System.out.println(post.getId()); // post가 null은 아니고. id 하나만 채워져 있다.
+                self.work();
             }
         };
     }
 
+    @Transactional
+    public void work() {
+        Comment c1 = commentService.findById(1L).get();
+
+        Post post = c1.getPost();
+
+        System.out.println(post.getId()); // post가 null은 아니고. id 하나만 채워져 있다.
+
+        System.out.println(post.getTitle());
+    }
 }
