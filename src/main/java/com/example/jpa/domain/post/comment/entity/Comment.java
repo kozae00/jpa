@@ -31,6 +31,8 @@ public class Comment {
     @Setter(AccessLevel.PRIVATE)
     private LocalDateTime modifiedDate;
 
+//    @ManyToOne // Comment가 1 : M 에서 M을 맡기 때문에, 외래키가 생성된다. 외래키는 M쪽으로 생성.
+//    @JoinColumn(name = "fk_post") // 외래키 이름을 지정
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post; // Post 안에는 여러 정보가 많음. @ManyToOne을 사용해 DB에 어떻게 저장할지 알려줌
 

@@ -25,20 +25,22 @@ public class BaseInitData {
     // 프록시 객체를 획득
     @Autowired
     @Lazy
-    private final BaseInitData self; // 프록시
+    private BaseInitData self; // 프록시
+
 
     @Bean
     @Order(1)
     public ApplicationRunner applicationRunner() {
         return args -> {
-
-           if(postService.count() > 0) {
-               return;
-           }
+            // 샘플 데이터 3개 생성.
+            // 데이터가 3개가 이미 있으면 패스
+            if( postService.count() > 0 ) {
+                return ;
+            }
 
             Post p1 = postService.write("title1", "body1");
-            Post p2 = postService.write("title2", "body2");
-            Post p3 = postService.write("title3", "body3");
+            postService.write("title2", "body2");
+            postService.write("title3", "body3");
 
             commentService.write(p1, "comment1");
             commentService.write(p1, "comment2");
@@ -47,7 +49,6 @@ public class BaseInitData {
         };
     }
 
-    // getParent
     @Bean
     @Order(2)
     public ApplicationRunner applicationRunner2() {
@@ -61,12 +62,18 @@ public class BaseInitData {
 
     @Transactional
     public void work() {
+        // 시작
+
         Comment c1 = commentService.findById(1L).get();
+        // SELECT * FROM comment WHERE id = 1;
 
-        Post post = c1.getPost();
-
+        Post post = c1.getPost(); // EAGER -> 이미 모든 post정보를 위에서 join으로 가져옴.
+        // LAZY -> post -> 비어 있다.
         System.out.println(post.getId()); // post가 null은 아니고. id 하나만 채워져 있다.
 
         System.out.println(post.getTitle());
+
+
+        // 끝
     }
 }
