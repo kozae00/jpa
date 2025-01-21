@@ -34,6 +34,7 @@ public class BaseInitData {
         };
     }
 
+    // getParent
     @Bean
     @Order(2)
     public ApplicationRunner applicationRunner2() {
