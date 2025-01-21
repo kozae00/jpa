@@ -39,12 +39,16 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String body;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY) // mppaedBy = "???" 안에는 상대 클래스(post)의 변수명을 넣어준다. mappedBy를 사용하지 않은 쪽이 관계의 주인이다.
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true) // mppaedBy = "???" 안에는 상대 클래스(post)의 변수명을 넣어준다. mappedBy를 사용하지 않은 쪽이 관계의 주인이다.
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
     public void addComment(Comment c1) {
         comments.add(c1);
         c1.setPost(this); // * 외래키 때문에 양방향 관계를 맺어준다.
+    }
+
+    public void removeComment(Comment c1) {
+        comments.remove(c1);
     }
 }
