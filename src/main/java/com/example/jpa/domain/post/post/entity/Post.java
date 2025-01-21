@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,6 +40,7 @@ public class Post {
     private String body;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY) // mppaedBy = "???" 안에는 상대 클래스(post)의 변수명을 넣어준다. mappedBy를 사용하지 않은 쪽이 관계의 주인이다.
-    private List<Comment> comment;
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
 
 }

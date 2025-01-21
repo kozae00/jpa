@@ -32,20 +32,7 @@ public class BaseInitData {
     @Order(1)
     public ApplicationRunner applicationRunner() {
         return args -> {
-            // 샘플 데이터 3개 생성.
-            // 데이터가 3개가 이미 있으면 패스
-            if( postService.count() > 0 ) {
-                return ;
-            }
-
-            Post p1 = postService.write("title1", "body1");
-            postService.write("title2", "body2");
-            postService.write("title3", "body3");
-
-            commentService.write(p1, "comment1");
-            commentService.write(p1, "comment2");
-            commentService.write(p1, "comment3");
-
+            self.work1();
         };
     }
 
@@ -75,5 +62,26 @@ public class BaseInitData {
 
 
         // 끝
+    }
+
+    @Transactional
+    public void work1() {
+        if (postService.count() > 0) {
+            return;
+        }
+
+        Post p1 = postService.write("title1", "body1");
+
+        Comment c1 = Comment.builder()
+                .body("comment1")
+                .build();
+
+
+
+        p1.getComments().add(c1);
+
+        commentService.write(p1, "comment1");
+
+
     }
 }
