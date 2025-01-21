@@ -31,9 +31,8 @@ public class Comment {
     @Setter(AccessLevel.PRIVATE)
     private LocalDateTime modifiedDate;
 
-    @ManyToOne
-    private Post post; // Post 안에는 여러 정보가 많음.
-    // private long postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post; // Post 안에는 여러 정보가 많음. @ManyToOne을 사용해 DB에 어떻게 저장할지 알려줌
 
     @Column(columnDefinition = "TEXT")
     private String body;

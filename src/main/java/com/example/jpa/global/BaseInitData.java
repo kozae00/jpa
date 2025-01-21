@@ -33,6 +33,10 @@ public class BaseInitData {
             Post p2 = postService.write("title2", "body2");
             Post p3 = postService.write("title3", "body3");
 
+            commentService.write(p1, "comment1");
+            commentService.write(p1, "comment2");
+            commentService.write(p1, "comment3");
+
         };
     }
 
@@ -44,23 +48,16 @@ public class BaseInitData {
             @Override
             @Transactional
             public void run(ApplicationArguments args) throws Exception {
-                Post post = postService.findById(1L).get();
+                Comment c1 = commentService.findById(1L).get();
+                // SELCT * FROM comment WHERE id = 1;
 
-                if(commentService.count() > 0) {
-                    return;
-                }
+                Post post = c1.getPost();
+                // SELECT * FROM post WHERE id = 1;
 
-                Comment c5 = Comment.builder()
-                        .body("comment5")
-                        .build();
-                // 2번 방식 -> 훨씬 객체지향적(자바스럽다)
-                post.addComment(c5);// comment1 댓글을 세팅
+                // Eager는 모든 정보를 들고옴. -> join 발생.
+                // Lazy는 필요한 정보만 들고옴. -> join 발생 X.
 
-//                long parentId = c5.getPostId(); // 부모 글 조회
-//                Post parent = postService.findById(parentId).get();
-//
-//                System.out.println(parent.getTitle());
-
+                System.out.println(post.getId()); // post가 null은 아니고. id 하나만 채워져 있다.
             }
         };
     }
