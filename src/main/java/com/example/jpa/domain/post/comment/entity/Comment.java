@@ -1,5 +1,6 @@
 package com.example.jpa.domain.post.comment.entity;
 
+import com.example.jpa.domain.post.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,13 +22,19 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     @Setter(AccessLevel.PRIVATE)
     private Long id; // long -> null X, Long -> null O
+
     @CreatedDate
     @Setter(AccessLevel.PRIVATE)
     private LocalDateTime createdDate;
+
     @LastModifiedDate
     @Setter(AccessLevel.PRIVATE)
     private LocalDateTime modifiedDate;
-    private long postId;
+
+    @ManyToOne
+    private Post post; // Post 안에는 여러 정보가 많음.
+    // private long postId;
+
     @Column(columnDefinition = "TEXT")
     private String body;
 }
