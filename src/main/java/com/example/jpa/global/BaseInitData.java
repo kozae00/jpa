@@ -76,12 +76,11 @@ public class BaseInitData {
                 .body("comment1")
                 .build();
 
+        commentService.save(c1);
 
+//        p1.getComments().add(c1);
+//        commentService.write(p1, "comment1");
 
-        p1.getComments().add(c1);
-
-        commentService.write(p1, "comment1");
-
-
+        p1.addComment(c1);
     }
 }

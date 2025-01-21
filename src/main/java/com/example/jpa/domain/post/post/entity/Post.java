@@ -43,4 +43,8 @@ public class Post {
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
+    public void addComment(Comment c1) {
+        comments.add(c1);
+        c1.setPost(this); // * 외래키 때문에 양방향 관계를 맺어준다.
+    }
 }
