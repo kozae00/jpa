@@ -16,4 +16,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findTop2ByTitleOrderByIdDesc(String title);
     Page<Post> findAll(Pageable pageable);
     Page<Post> findByTitleLike(String title, Pageable pageable);
+    List<Post> findByAuthorUsername(String username);
 }

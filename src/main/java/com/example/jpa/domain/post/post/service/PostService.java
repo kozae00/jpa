@@ -92,4 +92,7 @@ public class PostService {
     public List<Post> findTop2ByTitleOrderByIdDesc(String title1) {
         return postRepository.findTop2ByTitleOrderByIdDesc(title1);
     }
+    public List<Post> findByAuthorUsername(String username) {
+        return postRepository.findByAuthorUsername(username);
+    }
 }
