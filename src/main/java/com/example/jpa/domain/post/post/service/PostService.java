@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +57,28 @@ public class PostService {
 
     public void deleteById(long id) {
         postRepository.deleteById(id);
+    }
+
+    public List<Post> findAll() {
+        return postRepository.findAll();
+    }
+    public List<Post> findByTitle(String title) {
+        return postRepository.findByTitle(title);
+    }
+
+    public List<Post> findByTitleLike(String title1) {
+        return postRepository.findByTitleLike(title1);
+    }
+
+    public List<Post> findByTitleAndBody(String title1, String body1) {
+        return postRepository.findByTitleAndBody(title1, body1);
+    }
+
+    public List<Post> findByOrderByIdDesc() {
+        return postRepository.findByOrderByIdDesc();
+    }
+
+    public List<Post> findTop2ByTitleOrderByIdDesc(String title1) {
+        return postRepository.findTop2ByTitleOrderByIdDesc(title1);
     }
 }
