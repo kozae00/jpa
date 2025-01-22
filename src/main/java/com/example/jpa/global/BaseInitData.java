@@ -42,7 +42,8 @@ public class BaseInitData {
         return new ApplicationRunner() {
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                self.work();
+                self.work1();
+                self.work2();
             }
         };
     }
@@ -75,7 +76,7 @@ public class BaseInitData {
                 .body("comment1")
                 .build();
 
-        // c1 = commentService.save(c1);
+        commentService.save(c1);
         p1.addComment(c1);
         Comment c2 = Comment.builder()
                 .body("comment2")
@@ -86,5 +87,14 @@ public class BaseInitData {
                 .build();
         p1.addComment(c3);
         p1.removeComment(c1);
+    }
+
+    @Transactional
+    public void work2() {
+        Post post = postService.findById(1L).get();
+//        Comment comment = commentService.findById(1L).get();
+        int count = post.getComments().size(); //3개
+        System.out.println(count);
+        post.removeComment(1L);
     }
 }
