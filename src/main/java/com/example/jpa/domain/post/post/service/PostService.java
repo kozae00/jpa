@@ -1,5 +1,6 @@
 package com.example.jpa.domain.post.post.service;
 
+import com.example.jpa.domain.member.entity.Member;
 import com.example.jpa.domain.post.post.entity.Post;
 import com.example.jpa.domain.post.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,10 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;;
-    public Post write(String title, String body) {
+    public Post write(Member author, String title, String body) {
         // Post 조립
         Post post = Post.builder()
+                .author(author)
                 .title(title)
                 .body(body)
                 .build();
