@@ -13,8 +13,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 
 @Configuration
 @RequiredArgsConstructor
@@ -42,19 +40,7 @@ public class BaseInitData {
     @Transactional
     public void work2() {
         Post post = postService.findById(1L).get();
-        System.out.println("1번 포스트 가져옴");
-
-        Comment c4 = Comment.builder()
-                .body("comment4")
-                .build();
-
-        post.addComment(c4);
-
-        List<Comment> comments = post.getComments();
-        System.out.println("1번 포스트의 댓글 가져옴");
-
-        // comments -> 1, 2, 3, 4
-
+        postService.delete(post);
     }
 
     @Transactional

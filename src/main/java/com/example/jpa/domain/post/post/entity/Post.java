@@ -42,13 +42,13 @@ public class Post {
 
     // cascade를 통해 자식에게도 영속성 전이를 적용한다.
     // ophanRemoval을 적용하면 자바에서만 영향을 주는 것이 아닌, DB에서도 영향을 줘 데이터를 삭제한다.
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true) // mppaedBy = "???" 안에는 상대 클래스(post)의 변수명을 넣어준다. mappedBy를 사용하지 않은 쪽이 관계의 주인이다.
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true) // mppaedBy = "???" 안에는 상대 클래스(post)의 변수명을 넣어준다. mappedBy를 사용하지 않은 쪽이 관계의 주인이다.
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
-    public void addComment(Comment c1) {
-        comments.add(c1);
-        c1.setPost(this); // * 외래키 때문에 양방향 관계를 맺어준다.
+    public void addComment(Comment c) {
+        comments.add(c);
+        c.setPost(this); // * 외래키 때문에 양방향 관계를 맺어준다.
     }
 
     public void removeComment(Comment c1) {
@@ -60,5 +60,13 @@ public class Post {
                 .filter(com -> com.getId() == id)
                 .findFirst();
         opComment.ifPresent(comment -> comments.remove(comment));
+    }
+
+    public void removeAllComments() {
+        comments
+                .forEach(comment -> {
+                    comment.setPost(null);
+                });
+        comments.clear();
     }
 }
