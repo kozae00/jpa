@@ -1,39 +1,30 @@
-# properties 형태
-# spring.application.name=jpa
-
-# yml 형태
-# spring:
-#   application:
-#     name: jpa
-#     group: com.example
-
 server:
   port: 8080
 
-# community 버전일 때, log를 컬러로 볼 수 있도록 해줌.
 spring:
   output:
     ansi:
       enabled: always
 
   profiles:
-    active: test
+    active: dev
 
   datasource:
-    url: jdbc:h2:./db_dev;MODE=MySQL; TRACE_LEVEL_FILE=3
+    url: jdbc:h2:./db_dev;MODE=MySQL
     username: sa
     password:
     driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: false # logging을 설정 안하면 true로 설정해야 함.
+      ddl-auto: update # 재시작하면 테이블 지우고 다시 만듦. update 유지.
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
         highlight_sql: true
         use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect
 
 logging:
   level:
