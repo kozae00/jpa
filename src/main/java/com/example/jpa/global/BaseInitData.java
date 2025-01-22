@@ -39,8 +39,7 @@ public class BaseInitData {
 
     @Transactional
     public void work2() {
-        Post post = postService.findById(1L).get();
-        postService.delete(post);
+
     }
 
     @Transactional

@@ -12,12 +12,16 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+
     private final CommentRepository commentRepository;
+
     public Comment write(Post post, String body) {
+
         Comment comment = Comment.builder()
                 .post(post)
                 .body(body)
                 .build();
+
         return commentRepository.save(comment);
     }
 
