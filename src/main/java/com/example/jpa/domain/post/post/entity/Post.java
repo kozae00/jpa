@@ -3,12 +3,14 @@ package com.example.jpa.domain.post.post.entity;
 import com.example.jpa.domain.member.entity.Member;
 import com.example.jpa.domain.post.comment.entity.Comment;
 import com.example.jpa.domain.post.tag.entity.Tag;
+import com.example.jpa.domain.post.tag.entity.TagId;
 import com.example.jpa.global.entity.BaseTime;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,7 +36,8 @@ public class Post extends BaseTime {
 
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Builder.Default
-    private Set<Tag> tags = new HashSet<>();
+    // private Set<Tag> tags = new HashSet<>();
+    private List<Tag> tags = new ArrayList<>();
 
     public void addComment(Comment c) {
         comments.add(c);
@@ -43,7 +46,7 @@ public class Post extends BaseTime {
 
     public void addTag(String name) {
 //          로직기반 중복체크
-//          대신에 equals와 hashcode를 재정의
+//          대신에 자바차원에서 equals와 hashcode를 재정의해 중복 막기.
 //        Optional<Tag> oldTag = tags.stream()
 //                .filter(tag -> tag.getName().equals(name))
 //                .findFirst();
@@ -53,7 +56,7 @@ public class Post extends BaseTime {
 //        }
 
         Tag tag = Tag.builder()
-                .name(name)
+                .id(new TagId(this.getId(), name))
                 .post(this)
                 .build();
         tags.add(tag);
