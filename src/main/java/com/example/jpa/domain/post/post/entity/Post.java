@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -43,6 +44,15 @@ public class Post extends BaseTime {
     }
 
     public void addTag(String name) {
+
+        Optional<Tag> oldTag = tags.stream()
+                .filter(tag -> tag.getName().equals(name))
+                .findFirst();
+
+        if(oldTag.isPresent()) {
+            return;
+        }
+
         Tag tag = Tag.builder()
                 .name(name)
                 .post(this)
