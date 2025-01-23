@@ -14,12 +14,14 @@ import lombok.*;
 @NoArgsConstructor // 기본 생성자
 @Builder // 빌더 패턴을 사용
 @Setter
-
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Tag extends BaseEntity {
 
     @Column(length = 100)
+    @EqualsAndHashCode.Include
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Include
     private Post post;
 }
