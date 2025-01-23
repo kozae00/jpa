@@ -184,7 +184,7 @@ public class PostServiceTest {
     }
 
     @Test
-    @DisplayName("글 목록에서 회원 정보 가져오기")
+    @DisplayName("글 목록에서 회원 정보 가져오기 -> N + 1 문제")
     @Transactional
     void t13() {
 
@@ -194,7 +194,9 @@ public class PostServiceTest {
             System.out.println(post.getId() + "," + post.getTitle() + "," + post.getAuthor().getNickname());
         }
 
-        // assertThat(posts.size()).isEqualTo(3);
+        // 조회는 잘되지만, 회원의 정보만큼 쿼리(select)가 출력된다. -> 로그가 너무 많이 출력된다.
+        // 이 문제를 해결하기 위해 -> select * from post where member_id in (1, 2, 3, ...);
+        // 사용자는 jpa에게 member_id in (???) 값만 알려주면 된다. -> application.yml에 설정 추가 -> spring.jpa.properties.hibernate.default_batch_fetch_size: 100
     }
 
 }
