@@ -2,16 +2,17 @@ package com.example.jpa.domain.post.tag.entity;
 
 import com.example.jpa.domain.post.post.entity.Post;
 import com.example.jpa.global.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
 @AllArgsConstructor // 생성자
 @NoArgsConstructor // 기본 생성자
 @Builder // 빌더 패턴을 사용
-@EntityListeners(AuditingEntityListener.class)
 @Setter
 
 public class Tag extends BaseEntity {
